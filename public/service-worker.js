@@ -12,6 +12,7 @@ const FILES_TO_CACHE = [
 const CACHE_NAME = "static-cache-v2";
 const DATA_CACHE_NAME = "data-cache-v1";
 
+//Adds files to cache
 self.addEventListener("install", function (evt) {
   evt.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -23,6 +24,7 @@ self.addEventListener("install", function (evt) {
   self.skipWaiting();
 });
 
+//Removes old data
 self.addEventListener("activate", function (evt) {
   evt.waitUntil(
     caches.keys().then((keyList) => {
@@ -39,6 +41,7 @@ self.addEventListener("activate", function (evt) {
   self.clients.claim();
 });
 
+//Returns cache data
 self.addEventListener("fetch", function (evt) {
   if (evt.request.url.includes("/api/")) {
     evt.respondWith(

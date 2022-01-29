@@ -2,29 +2,28 @@ let db;
 
 const request = indexedDB.open("budget", 1);
 
-request.onupgradeneeded = ({target}) => {
+request.onupgradeneeded = ({target}) => { //Create offline storage
   db = target.result;
-  console.log("upgrade" + db);
   db.createObjectStore("offlineStore", { autoIncrement: true });
 };
 
-request.onerror = function ({target}) {
+request.onerror = function ({target}) { //Error log
   console.log(target.errorCode);
 };
 
-request.onsuccess = (event) => {
+request.onsuccess = (event) => { //When back online, update database if necessary
   if (navigator.onLine) {
     checkDB();
   }
 };
 
-const saveRecord = (record) => {
+const saveRecord = (record) => { //Save to offline storage
   const transaction = db.transaction(["offlineStore"], "readwrite");
   const store = transaction.objectStore("offlineStore");
   store.add(record);
 };
 
-function checkDB() {
+function checkDB() { //Gets offline storage data (bulk) and adds it to database
   const transaction = db.transaction(["offlineStore"], "readwrite");
   const store = transaction.objectStore("offlineStore");
   const getAll = store.getAll();

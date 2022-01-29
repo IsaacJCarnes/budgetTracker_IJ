@@ -45,7 +45,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script src="db.js"></script>
   <script src="index.js"></script>
-  <script>
+  <script> //Adds service worker if it finds the file
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker.register("service-worker.js").then(reg => {
