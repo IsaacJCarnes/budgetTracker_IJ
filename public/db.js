@@ -4,6 +4,7 @@ const request = indexedDB.open("budget", 1);
 
 request.onupgradeneeded = ({target}) => {
   db = target.result;
+  console.log("upgrade" + db);
   db.createObjectStore("offlineStore", { autoIncrement: true });
 };
 
